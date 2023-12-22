@@ -1,0 +1,54 @@
+@import 'src/assets/styles/variables';
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.radio {
+  display: none;
+}
+
+.label {
+  display: flex;
+  gap: 8px;
+}
+
+.span {
+  font-weight: 400;
+}
+
+.fakeRadio {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid $black-alpha-24;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    transition: .2s;
+  }
+}
+
+.radio:checked + .fakeRadio::before {
+  opacity: 1;
+  display: block;
+  text-align: center;
+  line-height: 10px;
+  font-weight: bold;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #5558FA;
+}

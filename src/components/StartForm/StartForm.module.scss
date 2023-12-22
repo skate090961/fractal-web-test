@@ -1,0 +1,21 @@
+@import 'src/assets/styles/variables';
+
+.container {
+    padding: 25px;
+    height: 704px;
+}
+
+.profileCard {
+    padding-bottom: 25px;
+    border-bottom: 1px solid $black-alpha-8;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.buttonWrapper {
+    margin-top: 48px;
+}

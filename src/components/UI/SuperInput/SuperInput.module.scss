@@ -1,0 +1,19 @@
+@import 'src/assets/styles/variables';
+
+.input {
+  width: 400px;
+  font-weight: 400;
+  border: 1px solid $black-alpha-16;
+  background-color: $black-alpha-4;
+  border-radius: 4px;
+  outline: none;
+  padding: 12px;
+
+  &::placeholder {
+    color: $black-alpha-48;
+  }
+
+  &:focus {
+    border-color: $primary;
+  }
+}

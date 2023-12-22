@@ -1,0 +1,19 @@
+@import 'src/assets/styles/variables';
+
+.button {
+  border-radius: 4px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border: none;
+}
+
+.contained {
+  background-color: $purple;
+  color: $white;
+}
+
+.outlined {
+  background-color: inherit;
+  border: 1.5px solid $purple;
+  color: $purple;
+}

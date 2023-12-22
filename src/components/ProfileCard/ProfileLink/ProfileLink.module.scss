@@ -1,0 +1,17 @@
+@import "src/assets/styles/variables";
+
+.container {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.link {
+  font-size: 12px;
+  font-weight: 400;
+}
