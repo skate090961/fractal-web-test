@@ -1,7 +1,6 @@
 import * as React from "react"
 import { ChangeEvent, DetailedHTMLProps, SelectHTMLAttributes } from "react"
 import s from "./SuperSelect.module.scss"
-import downIcon from "../../../assets/icons/ChevronDown.svg"
 import topIcon from "../../../assets/icons/ChevronTop.svg"
 
 type DefaultSelectPropsType = DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
@@ -24,7 +23,7 @@ export const SuperSelect: React.FC<SelectPropsType> = ({ options, onChangeOption
   return (
     <div className={s.wrapper}>
       <select {...restProps} className={s.select} onChange={onChangeCallback}>
-        <option disabled selected value="" className={s.hidden}>
+        <option disabled defaultValue={"Не выбрано"} className={s.hidden}>
           Не выбрано
         </option>
         {mappedOptions}

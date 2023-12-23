@@ -9,12 +9,12 @@ type StepperPropsType = {
   changeActiveStep: (step: number) => void
 }
 
-export const Stepper: React.FC<StepperPropsType> = ({ changeActiveStep, activeStep, steps }) => {
+export const Stepper: React.FC<StepperPropsType> = ({ activeStep, steps }) => {
   const isStepComplete = (currentStep: number) => activeStep > currentStep
   const stepsListRender = steps.map((step, index) => {
     const activeStepStyle = step.value === activeStep && s.active
     const isStepDone = isStepComplete(step.value) && s.active
-    const showLine = index !== steps.length - 1 // Check if it's not the last step
+    const isShowLine = index !== steps.length - 1
 
     return (
       <div className={s.step} key={step.value}>
@@ -23,7 +23,7 @@ export const Stepper: React.FC<StepperPropsType> = ({ changeActiveStep, activeSt
           {step.value === activeStep && <img src={dotIcon} alt="dot" />}
         </div>
         <span className={`${s.label} ${isStepComplete(step.value) && s.active}`}>{step.label}</span>
-        {showLine && <div className={`${s.line} ${isStepDone}`}></div>}
+        {isShowLine && <div className={`${s.line} ${isStepDone}`}></div>}
       </div>
     )
   })
