@@ -5,7 +5,7 @@ import deleteIcon from "../../../../../assets/icons/Trash.svg"
 export const AdvantageItem = () => {
   return (
     <div className={s.container}>
-      <SuperInput placeholder={"Введите преимущество"} />
+      {/*<SuperInput placeholder={"Введите преимущество"} />*/}
       <div className={s.icon}>
         <img src={deleteIcon} alt="trash" />
       </div>

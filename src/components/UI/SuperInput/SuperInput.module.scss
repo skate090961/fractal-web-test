@@ -16,4 +16,8 @@
   &:focus {
     border-color: $primary;
   }
+
+  &.error {
+    border-color: $berry-red;
+  }
 }

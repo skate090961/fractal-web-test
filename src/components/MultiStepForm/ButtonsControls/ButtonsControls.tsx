@@ -1,14 +1,15 @@
 import s from "./ButtonsControls.module.scss"
 import { SuperButton } from "../../UI/SuperButton/SuperButton.tsx"
-import React from "react"
+import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react"
 
-type ButtonsControls = {
+type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
+type ButtonsControls = DefaultButtonPropsType & {
   isLastStep?: boolean
   prevStep?: () => void
   nextStep?: () => void
 }
 
-export const ButtonsControls: React.FC<ButtonsControls> = ({ isLastStep, prevStep, nextStep }) => {
+export const ButtonsControls: React.FC<ButtonsControls> = ({ isLastStep, prevStep, nextStep, ...restProps }) => {
   const lastStepTitle = isLastStep ? "Отправить" : "Далее"
 
   return (
@@ -16,7 +17,7 @@ export const ButtonsControls: React.FC<ButtonsControls> = ({ isLastStep, prevSte
       <SuperButton variant={"outlined"} onClick={prevStep}>
         Назад
       </SuperButton>
-      <SuperButton variant={"contained"} onClick={nextStep}>
+      <SuperButton variant={"contained"} onClick={nextStep} type={"submit"}>
         {lastStepTitle}
       </SuperButton>
     </div>

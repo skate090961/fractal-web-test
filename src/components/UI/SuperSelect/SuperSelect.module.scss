@@ -26,6 +26,14 @@
 
 .wrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.error {
+  color: $berry-red;
+  font-weight: 400;
 }
 
 .icon {
