@@ -21,7 +21,7 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
   const multiFormData = useSelector(selectMultiForm)
   const requestStatus = useSelector(selectRequestStatus)
   const dispatch = useAppDispatch()
-
+  const isLoading = requestStatus === "loading"
   const handlePrevStep = () => changeActiveStep(2)
   const {
     register,
@@ -56,13 +56,14 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
           placeholder={"Введите о себе"}
           {...register("about")}
           onChange={handleInputChange}
+          disabled={isLoading}
         ></textarea>
         <div className={s.infoWrapper}>
           {errors && <div className={s.errorText}>{errors.about?.message}</div>}
           <div className={s.counter}>{characterCount}/200</div>
         </div>
       </div>
-      <ButtonsControls isLastStep={true} prevStep={handlePrevStep} isDisabled={requestStatus === "loading"} />
+      <ButtonsControls isLastStep={true} prevStep={handlePrevStep} isDisabled={isLoading} />
       {requestStatus === "succeeded" && <Modal isSucceeded />}
       {requestStatus === "failed" && <Modal isSucceeded={false} />}
     </form>

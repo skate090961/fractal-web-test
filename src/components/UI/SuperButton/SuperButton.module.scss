@@ -9,6 +9,8 @@
   &:disabled {
     cursor: default;
     background-color: $black-alpha-48;
+    color: $white;
+    border: none;
   }
 }
 

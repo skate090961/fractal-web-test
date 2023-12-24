@@ -15,7 +15,7 @@ export const ButtonsControls: React.FC<ButtonsControls> = ({ isLastStep, prevSte
 
   return (
     <div className={s.controls}>
-      <SuperButton variant={"outlined"} onClick={prevStep}>
+      <SuperButton variant={"outlined"} onClick={prevStep} disabled={isDisabled}>
         Назад
       </SuperButton>
       <SuperButton variant={"contained"} onClick={nextStep} type={"submit"} disabled={isDisabled}>
