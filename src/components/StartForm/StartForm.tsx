@@ -2,13 +2,13 @@ import s from "./StartForm.module.scss"
 import { ProfileCard } from "../ProfileCard/ProfileCard.tsx"
 import { FormField } from "../FormField/FormField.tsx"
 import { SuperButton } from "../UI/SuperButton/SuperButton.tsx"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { selectMultiForm } from "../../store/multiForm/multi-form-selectors.ts"
 import * as yup from "yup"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import React from "react"
+import { setEmail, setPhone } from "../../store/multiForm/multi-form-reducer.ts"
 
 export type FirstStepFormInput = {
   phone: string
@@ -21,7 +21,7 @@ export const StartForm = () => {
   const dispatch = useDispatch()
   const schema = yup
     .object({
-      phone: yup.string(),
+      phone: yup.string().length(18, "Введите корректный номер телефона"),
       email: yup.string().email("Введите корректный email").required("Введите email"),
     })
     .required()
@@ -41,7 +41,8 @@ export const StartForm = () => {
 
   const onSubmit: SubmitHandler<FirstStepFormInput> = (data) => {
     const { phone, email } = data
-    console.log(data)
+    dispatch(setEmail(email))
+    dispatch(setPhone(phone))
     navigate("/steps")
   }
 
@@ -57,9 +58,7 @@ export const StartForm = () => {
           error={errors.phone}
           label="Номер телефона"
           placeholder="+7 (999) 999-99-99"
-          onChange={(event) => {
-            event.target.value = "1123123"
-          }}
+          isPhone={true}
         />
         <FormField
           name="email"

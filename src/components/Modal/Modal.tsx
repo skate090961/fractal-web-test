@@ -3,7 +3,7 @@ import succeededIcon from "../../assets/icons/CircleCheckFilled.png"
 import failedIcon from "../../assets/icons/CircleCancelFilled.png"
 import { SuperButton } from "../UI/SuperButton/SuperButton.tsx"
 import { Link } from "react-router-dom"
-import { setActiveStep } from "../../store/multiForm/multi-form-reducer.ts"
+import { setActiveStep, setRequestStatus } from "../../store/multiForm/multi-form-reducer.ts"
 import { useDispatch } from "react-redux"
 import React from "react"
 import closeIcon from "../../assets/icons/Close.png"
@@ -14,7 +14,13 @@ type ModalPropsType = {
 
 export const Modal: React.FC<ModalPropsType> = ({ isSucceeded }) => {
   const dispatch = useDispatch()
-  const handleGoMain = () => dispatch(setActiveStep(1))
+  const handleGoMain = () => {
+    dispatch(setRequestStatus("idle"))
+    dispatch(setActiveStep(1))
+  }
+  const closeModal = () => {
+    dispatch(setRequestStatus("idle"))
+  }
 
   return (
     <>
@@ -23,7 +29,7 @@ export const Modal: React.FC<ModalPropsType> = ({ isSucceeded }) => {
         <div className={`${s.header} ${isSucceeded ? s.succeeded : s.failed}`}>
           <span className={s.title}>{isSucceeded ? "Форма успешно отправлена" : "Ошибка"}</span>
           {!isSucceeded && (
-            <button className={s.close}>
+            <button className={s.close} onClick={closeModal}>
               <img src={closeIcon} alt="close" />
             </button>
           )}
@@ -41,7 +47,9 @@ export const Modal: React.FC<ModalPropsType> = ({ isSucceeded }) => {
               </SuperButton>
             </Link>
           ) : (
-            <SuperButton variant={"contained"}>Закрыть</SuperButton>
+            <SuperButton variant={"contained"} onClick={closeModal}>
+              Закрыть
+            </SuperButton>
           )}
         </div>
       </div>

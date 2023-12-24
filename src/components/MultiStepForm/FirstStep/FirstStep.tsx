@@ -3,7 +3,7 @@ import { FormField } from "../../FormField/FormField.tsx"
 import { SuperSelect } from "../../UI/SuperSelect/SuperSelect.tsx"
 import { ButtonsControls } from "../ButtonsControls/ButtonsControls.tsx"
 import React from "react"
-import { setName, setNickname, setSername, setSex, SexEnum } from "../../../store/multiForm/multi-form-reducer.ts"
+import { setName, setNickname, setSername, setSex } from "../../../store/multiForm/multi-form-reducer.ts"
 import { SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -44,9 +44,9 @@ export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) =>
         .matches(/^[a-zA-Zа-яА-Я]+$/, "Имя может содержать только буквы"),
       sername: yup
         .string()
-        .required("Введите имя")
+        .required("Введите фамилию")
         .max(50, "Максимальная длина - 50 символов")
-        .matches(/^[a-zA-Zа-яА-Я]+$/, "Имя может содержать только буквы"),
+        .matches(/^[a-zA-Zа-яА-Я]+$/, "Фамилия может содержать только буквы"),
       sex: yup.string().test("sex-selector", "Выберите пол", (value, { path, createError }) => {
         if (!value || value === "other") {
           return createError({ path, message: "Выберите пол" })
@@ -78,7 +78,6 @@ export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) =>
     dispatch(setNickname(nickname))
     dispatch(setSex(sex))
     changeActiveStep(2)
-    console.log(data)
   }
 
   const sex = [
@@ -110,7 +109,6 @@ export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) =>
         <SuperSelect options={sex} register={register} name="sex" error={errors.sex} />
       </div>
       <ButtonsControls prevStep={handleGoBack} />
-      {/*<button type={"submit"}>submit</button>*/}
     </form>
   )
 }

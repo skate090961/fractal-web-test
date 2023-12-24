@@ -5,6 +5,11 @@
   padding: 12px 16px;
   cursor: pointer;
   border: none;
+
+  &:disabled {
+    cursor: default;
+    background-color: $black-alpha-48;
+  }
 }
 
 .contained {

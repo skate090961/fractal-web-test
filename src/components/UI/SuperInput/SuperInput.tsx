@@ -14,7 +14,8 @@ export const SuperInput: React.FC<SuperInputPropsType> = ({ name, register, erro
 
   return (
     <div className={s.wrapper}>
-      <input type="text" className={finallyInputStyle} {...restProps} {...register(name)} />
+      <input className={finallyInputStyle} {...restProps} {...register(name)} />
+      {error ? <div className={s.errorText}>{error.message}</div> : <br />}
     </div>
   )
 }

@@ -24,3 +24,17 @@
   flex-direction: column;
   gap: 65px;
 }
+
+.errorText {
+  color: $berry-red;
+  font-weight: 400;
+}
+
+.counter {
+  text-align: right;
+}
+
+.infoWrapper {
+  display: flex;
+  justify-content: space-between;
+}

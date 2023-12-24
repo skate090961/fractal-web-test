@@ -7,9 +7,10 @@ type ButtonsControls = DefaultButtonPropsType & {
   isLastStep?: boolean
   prevStep?: () => void
   nextStep?: () => void
+  isDisabled?: boolean
 }
 
-export const ButtonsControls: React.FC<ButtonsControls> = ({ isLastStep, prevStep, nextStep, ...restProps }) => {
+export const ButtonsControls: React.FC<ButtonsControls> = ({ isLastStep, prevStep, nextStep, isDisabled }) => {
   const lastStepTitle = isLastStep ? "Отправить" : "Далее"
 
   return (
@@ -17,7 +18,7 @@ export const ButtonsControls: React.FC<ButtonsControls> = ({ isLastStep, prevSte
       <SuperButton variant={"outlined"} onClick={prevStep}>
         Назад
       </SuperButton>
-      <SuperButton variant={"contained"} onClick={nextStep} type={"submit"}>
+      <SuperButton variant={"contained"} onClick={nextStep} type={"submit"} disabled={isDisabled}>
         {lastStepTitle}
       </SuperButton>
     </div>

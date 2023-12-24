@@ -1,5 +1,11 @@
 @import 'src/assets/styles/variables';
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .input {
   width: 400px;
   font-weight: 400;
@@ -20,4 +26,9 @@
   &.error {
     border-color: $berry-red;
   }
+}
+
+.errorText {
+  color: $berry-red;
+  font-weight: 400;
 }

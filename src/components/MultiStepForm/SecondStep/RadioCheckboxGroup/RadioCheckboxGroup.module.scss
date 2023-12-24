@@ -1,13 +1,9 @@
 @import 'src/assets/styles/variables';
 
-.options {
+.group {
   display: flex;
   flex-direction: column;
   gap: 2px;
-}
-
-.radio {
-  display: none;
 }
 
 .label {
@@ -15,17 +11,29 @@
   gap: 8px;
 }
 
-.span {
+.name {
   font-weight: 400;
 }
 
-.fakeRadio {
+.box {
+  display: none;
+}
+
+.fake {
   display: inline-block;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
+
   border: 1.5px solid $black-alpha-24;
   position: relative;
+
+  &.radioBox {
+    border-radius: 50%;
+  }
+
+  &.checkboxBox {
+    border-radius: 4px;
+  }
 
   &::before {
     content: '';
@@ -41,14 +49,22 @@
   }
 }
 
-.radio:checked + .fakeRadio::before {
+.box:checked + .fake::before {
   opacity: 1;
   display: block;
   text-align: center;
   line-height: 10px;
   font-weight: bold;
+}
+
+.box:checked.radioInner + .fake::before {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background-color: #5558FA;
+}
+
+.box:checked.checkboxInner + .fake::before {
+  content: "\2713";
+  color: #5558FA;
 }
