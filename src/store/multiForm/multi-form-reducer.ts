@@ -1,16 +1,9 @@
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
-
-const initState: MultiFormStateType = {
-  formData: {} as FormDataModelType,
-  activeStep: 1,
-  status: "idle",
-}
-
+export type AdvantageFieldsType = { name: string }
 export enum SexEnum {
   MAN = "man",
   WOMAN = "woman",
 }
-
 export type FormDataModelType = {
   nickname?: string
   name?: string
@@ -23,11 +16,11 @@ export type FormDataModelType = {
   checkbox?: number[]
   about?: string
 }
-
 type MultiFormStateType = {
   activeStep: number
   formData: FormDataModelType
   status: RequestStatusType
+  advantageFields: AdvantageFieldsType[]
 }
 export type ActionsType =
   | ReturnType<typeof setActiveStep>
@@ -35,6 +28,15 @@ export type ActionsType =
   | ReturnType<typeof setRequestStatus>
   | ReturnType<typeof clearForm>
   | ReturnType<typeof updateFormData>
+  | ReturnType<typeof setAdvantageFields>
+
+const initState: MultiFormStateType = {
+  formData: {} as FormDataModelType,
+  activeStep: 1,
+  status: "idle",
+  advantageFields: [],
+}
+
 export const multiFormReducer = (state: MultiFormStateType = initState, action: ActionsType): MultiFormStateType => {
   switch (action.type) {
     case "MULTIFORM/SET-ACTIVE-STEP":
@@ -59,6 +61,11 @@ export const multiFormReducer = (state: MultiFormStateType = initState, action: 
         ...state,
         formData: { ...state.formData, ...action.model },
       }
+    case "MULTIFORM/SET-ADVANTAGE-FIELDS":
+      return {
+        ...state,
+        advantageFields: [...action.fields],
+      }
     default:
       return state
   }
@@ -69,3 +76,5 @@ export const setRequestStatus = (status: RequestStatusType) =>
   ({ type: "MULTIFORM/SET-REQUEST-STATUS", status }) as const
 export const clearForm = () => ({ type: "MULTIFORM/CLEAR-FORM" }) as const
 export const updateFormData = (model: FormDataModelType) => ({ type: "MULTIFORM/UPDATE-FORM-DATA", model }) as const
+export const setAdvantageFields = (fields: AdvantageFieldsType[]) =>
+  ({ type: "MULTIFORM/SET-ADVANTAGE-FIELDS", fields }) as const

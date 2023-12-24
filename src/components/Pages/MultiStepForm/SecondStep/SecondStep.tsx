@@ -1,15 +1,15 @@
 import s from "./SecondStep.module.scss"
 import { RadioCheckboxGroup } from "./RadioCheckboxGroup/RadioCheckboxGroup.tsx"
 import { ButtonsControls } from "../ButtonsControls/ButtonsControls.tsx"
-import React from "react"
+import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import plusIcon from "../../../../assets/icons/Plus.svg"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { selectMultiForm } from "../../../../store/multiForm/multi-form-selectors.ts"
+import { selectAdvantageFields, selectMultiForm } from "../../../../store/multiForm/multi-form-selectors.ts"
 import { convertNumbersToStrings } from "../../../../helpers/convertNumbersToStrings.ts"
 import { convertStringsToNumbers } from "../../../../helpers/convertStringsToNumbers.ts"
-import { setAdvantages, updateFormData } from "../../../../store/multiForm/multi-form-reducer.ts"
+import { setAdvantageFields, setAdvantages, updateFormData } from "../../../../store/multiForm/multi-form-reducer.ts"
 import { SuperButton } from "../../../UI/SuperButton/SuperButton.tsx"
 import { secondStepSchema } from "./secondStepSchema.ts"
 import { Advantage } from "./Advantage/Advantage.tsx"
@@ -21,6 +21,7 @@ type SecondStepPropsType = {
 export type SecondStepFormInput = {
   advantages: {
     name: string
+    value: string
   }[]
   checkbox: string[]
   radio: string
@@ -28,6 +29,7 @@ export type SecondStepFormInput = {
 
 export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) => {
   const multiFormData = useSelector(selectMultiForm)
+  const advantageFields = useSelector(selectAdvantageFields)
   const dispatch = useDispatch()
 
   const checkboxValue = multiFormData.checkbox ? convertNumbersToStrings(multiFormData.checkbox) : []
@@ -48,16 +50,23 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
     resolver: yupResolver(secondStepSchema),
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     name: "advantages",
     control,
   })
   const advantagesRenderList = fields.map((field, index) => (
     <Advantage register={register} remove={remove} errors={errors} index={index} key={index} field={field} />
   ))
+
+  useEffect(() => {
+    advantageFields.forEach((field, index) => {
+      update(index, { name: field.name })
+    })
+  }, [])
   const onSubmit: SubmitHandler<SecondStepFormInput> = (data) => {
     const { advantages, checkbox, radio } = data
     const advantagesTotal = advantages.map((advantage) => advantage.name)
+    dispatch(setAdvantageFields(advantages))
     dispatch(updateFormData({ checkbox: convertStringsToNumbers(checkbox), radio: Number(radio) }))
     dispatch(setAdvantages(advantagesTotal))
     changeActiveStep(3)
@@ -98,7 +107,6 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
           type={"radio"}
         />
       </div>
-
       <ButtonsControls prevStep={handlePrevStep} />
     </form>
   )
