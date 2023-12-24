@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectActiveStep } from "../../../store/multiForm/multi-form-selectors.ts"
 import { setActiveStep } from "../../../store/multiForm/multi-form-reducer.ts"
 
-type StepType = {
+export type StepDataType = {
   label: string
   value: number
   component: React.ReactNode
@@ -23,7 +23,7 @@ export const MultiStepForm = () => {
     }
   }
 
-  const steps: StepType[] = [
+  const steps: StepDataType[] = [
     {
       label: "1",
       value: 1,
@@ -40,6 +40,7 @@ export const MultiStepForm = () => {
       component: <ThirdStep changeActiveStep={changeActiveStep} />,
     },
   ]
+
   const activeComponent = steps.find(({ value }) => value === activeStep)?.component || null
 
   return (

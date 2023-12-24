@@ -1,4 +1,4 @@
-import { FormDataType } from "../store/multiForm/multi-form-reducer.ts"
+import { FormDataModelType } from "../store/multiForm/multi-form-reducer.ts"
 
 const serverRequest = () => {
   return new Promise((resolve, reject) => {
@@ -13,7 +13,7 @@ const serverRequest = () => {
 }
 
 export const formAPI = {
-  async postForm(formData: FormDataType) {
+  async postForm(formData: FormDataModelType) {
     console.log(formData)
     return await serverRequest()
   },

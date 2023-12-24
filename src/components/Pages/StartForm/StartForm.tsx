@@ -5,10 +5,10 @@ import { SuperButton } from "../../UI/SuperButton/SuperButton.tsx"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { selectMultiForm } from "../../../store/multiForm/multi-form-selectors.ts"
-import * as yup from "yup"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { setEmail, setPhone } from "../../../store/multiForm/multi-form-reducer.ts"
+import { updateFormData } from "../../../store/multiForm/multi-form-reducer.ts"
+import { startFormSchema } from "./StartFormSchema.ts"
 
 export type FirstStepFormInput = {
   phone: string
@@ -19,12 +19,6 @@ export const StartForm = () => {
   const navigate = useNavigate()
   const multiFormData = useSelector(selectMultiForm)
   const dispatch = useDispatch()
-  const schema = yup
-    .object({
-      phone: yup.string().length(18, "Введите корректный номер телефона"),
-      email: yup.string().email("Введите корректный email").required("Введите email"),
-    })
-    .required()
 
   const {
     register,
@@ -36,13 +30,12 @@ export const StartForm = () => {
       email: multiFormData.email,
     },
     mode: "onBlur",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(startFormSchema),
   })
 
   const onSubmit: SubmitHandler<FirstStepFormInput> = (data) => {
     const { phone, email } = data
-    dispatch(setEmail(email))
-    dispatch(setPhone(phone))
+    dispatch(updateFormData({ phone, email }))
     navigate("/steps")
   }
 

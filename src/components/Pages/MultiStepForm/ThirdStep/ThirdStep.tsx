@@ -2,14 +2,15 @@ import s from "./ThirdStep.module.scss"
 import { ButtonsControls } from "../ButtonsControls/ButtonsControls.tsx"
 import React, { ChangeEvent, useState } from "react"
 import { useSelector } from "react-redux"
-import * as yup from "yup"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { selectMultiForm, selectRequestStatus } from "../../../../store/multiForm/multi-form-selectors.ts"
 import { useAppDispatch } from "../../../../store/store.ts"
-import { setAbout } from "../../../../store/multiForm/multi-form-reducer.ts"
 import { postForm } from "../../../../store/multiForm/multi-form-thunk.ts"
 import { Modal } from "../../../Modal/Modal.tsx"
+import { thirdStepSchema } from "./thirdStepSchema.ts"
+import { removeExtraSpaces } from "../../../../helpers/removeExtraSpaces.ts"
+
 type ThirdStepPropsType = {
   changeActiveStep: (activeStep: number) => void
 }
@@ -20,11 +21,7 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
   const multiFormData = useSelector(selectMultiForm)
   const requestStatus = useSelector(selectRequestStatus)
   const dispatch = useAppDispatch()
-  const schema = yup
-    .object({
-      about: yup.string().max(200, "Максимальная длина - 200 символов"),
-    })
-    .required()
+
   const handlePrevStep = () => changeActiveStep(2)
   const {
     register,
@@ -35,7 +32,7 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
       about: multiFormData.about,
     },
     mode: "all",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(thirdStepSchema),
   })
 
   const [characterCount, setCharacterCount] = useState(0)
@@ -45,10 +42,10 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
     const valueWithoutSpaces = value.replace(/\s/g, "")
     setCharacterCount(valueWithoutSpaces.length)
   }
-  const onSubmit: SubmitHandler<ThirdStepFormInput> = async (data) => {
+  const onSubmit: SubmitHandler<ThirdStepFormInput> = (data) => {
     const { about } = data
-    dispatch(setAbout(about.replace(/\s+/g, " ")))
-    await dispatch(postForm(multiFormData))
+    const trimmedStr = removeExtraSpaces(about)
+    dispatch(postForm({ ...multiFormData, about: trimmedStr }))
   }
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit as any)}>
@@ -66,7 +63,7 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
         </div>
       </div>
       <ButtonsControls isLastStep={true} prevStep={handlePrevStep} isDisabled={requestStatus === "loading"} />
-      {requestStatus === "succeeded" && <Modal isSucceeded={true} />}
+      {requestStatus === "succeeded" && <Modal isSucceeded />}
       {requestStatus === "failed" && <Modal isSucceeded={false} />}
     </form>
   )

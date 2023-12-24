@@ -5,15 +5,14 @@ import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import plusIcon from "../../../../assets/icons/Plus.svg"
-import deleteIcon from "../../../../assets/icons/Trash.svg"
-import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { selectMultiForm } from "../../../../store/multiForm/multi-form-selectors.ts"
 import { convertNumbersToStrings } from "../../../../helpers/convertNumbersToStrings.ts"
 import { convertStringsToNumbers } from "../../../../helpers/convertStringsToNumbers.ts"
-import { setAdvantages, setCheckbox, setRadio } from "../../../../store/multiForm/multi-form-reducer.ts"
-import { SuperInput } from "../../../UI/SuperInput/SuperInput.tsx"
+import { setAdvantages, updateFormData } from "../../../../store/multiForm/multi-form-reducer.ts"
 import { SuperButton } from "../../../UI/SuperButton/SuperButton.tsx"
+import { secondStepSchema } from "./secondStepSchema.ts"
+import { Advantage } from "./Advantage/Advantage.tsx"
 
 type SecondStepPropsType = {
   changeActiveStep: (activeStep: number) => void
@@ -31,17 +30,9 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
   const multiFormData = useSelector(selectMultiForm)
   const dispatch = useDispatch()
 
-  const schema = yup.object().shape({
-    advantages: yup.array().of(
-      yup.object().shape({
-        name: yup.string().required("Поле обязательно для заполнения"),
-      }),
-    ),
-    checkbox: yup.array(),
-    radio: yup.string(),
-  })
   const checkboxValue = multiFormData.checkbox ? convertNumbersToStrings(multiFormData.checkbox) : []
   const radioValue = multiFormData.radio ? String(multiFormData.radio) : "1"
+
   const {
     register,
     handleSubmit,
@@ -54,19 +45,20 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
       radio: radioValue,
     },
     mode: "onBlur",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(secondStepSchema),
   })
 
   const { fields, append, remove } = useFieldArray({
     name: "advantages",
     control,
   })
-
+  const advantagesRenderList = fields.map((field, index) => (
+    <Advantage register={register} remove={remove} errors={errors} index={index} key={index} field={field} />
+  ))
   const onSubmit: SubmitHandler<SecondStepFormInput> = (data) => {
     const { advantages, checkbox, radio } = data
     const advantagesTotal = advantages.map((advantage) => advantage.name)
-    dispatch(setCheckbox(convertStringsToNumbers(checkbox)))
-    dispatch(setRadio(Number(radio)))
+    dispatch(updateFormData({ checkbox: convertStringsToNumbers(checkbox), radio: Number(radio) }))
     dispatch(setAdvantages(advantagesTotal))
     changeActiveStep(3)
   }
@@ -76,21 +68,7 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
       <div className={s.fields}>
         <div className={s.block}>
           <div>Преимущества</div>
-          {fields.map((field, index) => {
-            return (
-              <section key={field.id} className={s.advantage}>
-                <SuperInput
-                  name={`advantages.${index}.name`}
-                  register={register}
-                  error={errors?.advantages?.[index]?.name || ""}
-                  style={{ width: "300px", backgroundColor: "white" }}
-                />
-                <div onClick={() => remove(index)} className={s.icon}>
-                  <img src={deleteIcon} alt="trash" />
-                </div>
-              </section>
-            )
-          })}
+          {advantagesRenderList}
           <div>
             <SuperButton type="button" onClick={() => append({ name: "" })} variant={"outlined"}>
               <img src={plusIcon} alt="plus-icon" className={s.buttonIcon} />
