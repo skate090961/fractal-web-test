@@ -5,8 +5,8 @@ import { ThirdStep } from "./ThirdStep/ThirdStep.tsx"
 import { Stepper } from "./Stepper/Stepper.tsx"
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { selectActiveStep } from "../../store/multiForm/multi-form-selectors.ts"
-import { setActiveStep } from "../../store/multiForm/multi-form-reducer.ts"
+import { selectActiveStep } from "../../../store/multiForm/multi-form-selectors.ts"
+import { setActiveStep } from "../../../store/multiForm/multi-form-reducer.ts"
 
 type StepType = {
   label: string

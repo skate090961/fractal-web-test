@@ -1,30 +1,24 @@
 import s from "./FirstStep.module.scss"
-import { FormField } from "../../FormField/FormField.tsx"
-import { SuperSelect } from "../../UI/SuperSelect/SuperSelect.tsx"
 import { ButtonsControls } from "../ButtonsControls/ButtonsControls.tsx"
 import React from "react"
-import { setName, setNickname, setSername, setSex } from "../../../store/multiForm/multi-form-reducer.ts"
 import { SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useDispatch, useSelector } from "react-redux"
-import { selectMultiForm } from "../../../store/multiForm/multi-form-selectors.ts"
+import { selectMultiForm } from "../../../../store/multiForm/multi-form-selectors.ts"
+import { setName, setNickname, setSername, setSex } from "../../../../store/multiForm/multi-form-reducer.ts"
+import { FormField } from "../../../FormField/FormField.tsx"
+import { SuperSelect } from "../../../UI/SuperSelect/SuperSelect.tsx"
 
 type FirstStepPropsType = {
   changeActiveStep: (stepValue: number) => void
-}
-
-enum SexEnumType {
-  man = "мужской",
-  woman = "женский",
-  other = "Не выбрано",
 }
 
 export type FirstStepFormInput = {
   nickname: string
   name: string
   sername: string
-  sex: SexEnumType
+  sex: "Не выбрано" | "мужской" | "женский"
 }
 
 export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) => {
@@ -65,7 +59,7 @@ export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) =>
       nickname: multiFormData.nickname,
       name: multiFormData.name,
       sername: multiFormData.sername,
-      sex: multiFormData.sex || SexEnumType.other,
+      sex: !multiFormData.sex ? multiFormData.sex : "Не выбрано",
     },
     mode: "onBlur",
     resolver: yupResolver(schema),
@@ -80,11 +74,6 @@ export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) =>
     changeActiveStep(2)
   }
 
-  const sex = [
-    { id: 1, value: SexEnumType.other, test: "other" },
-    { id: 2, value: SexEnumType.man, test: "man" },
-    { id: 3, value: SexEnumType.woman, test: "woman" },
-  ]
   const handleGoBack = () => {
     window.history.back()
   }
@@ -97,16 +86,35 @@ export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) =>
           error={errors.nickname}
           label="Никнейм"
           placeholder="Введите никнейм"
+          style={{ width: "300px", backgroundColor: "white" }}
         />
-        <FormField name="name" register={register} error={errors.name} label="Имя" placeholder="Введите имя" />
+        <FormField
+          name="name"
+          register={register}
+          error={errors.name}
+          label="Имя"
+          placeholder="Введите имя"
+          style={{ width: "300px", backgroundColor: "white" }}
+        />
         <FormField
           name="sername"
           register={register}
           error={errors.sername}
           label="Фамилия"
           placeholder="Введите фамилию"
+          style={{ width: "300px", backgroundColor: "white" }}
         />
-        <SuperSelect options={sex} register={register} name="sex" error={errors.sex} />
+        <SuperSelect
+          options={[
+            { value: "other", name: "Не выбрано" },
+            { value: "man", name: "Мужской" },
+            { value: "woman", name: "Женский" },
+          ]}
+          register={register}
+          name="sex"
+          error={errors.sex}
+          title="Пол"
+        />
       </div>
       <ButtonsControls prevStep={handleGoBack} />
     </form>

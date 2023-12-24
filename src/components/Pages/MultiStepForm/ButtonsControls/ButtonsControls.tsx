@@ -1,6 +1,6 @@
 import s from "./ButtonsControls.module.scss"
-import { SuperButton } from "../../UI/SuperButton/SuperButton.tsx"
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react"
+import { SuperButton } from "../../../UI/SuperButton/SuperButton.tsx"
 
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 type ButtonsControls = DefaultButtonPropsType & {

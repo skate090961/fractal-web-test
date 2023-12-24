@@ -1,7 +1,7 @@
 import s from "./Stepper.module.scss"
 import React from "react"
-import dotIcon from "../../../assets/icons/DotSmall.svg"
-import checkIcon from "../../../assets/icons/CheckSmall.svg"
+import dotIcon from "../../../../assets/icons/DotSmall.svg"
+import checkIcon from "../../../../assets/icons/CheckSmall.svg"
 
 type StepperPropsType = {
   steps: Array<any>

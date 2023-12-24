@@ -10,7 +10,7 @@ type SuperInputPropsType = Omit<DefaultInputPropsType, "name"> & {
   error: any
 }
 export const SuperInput: React.FC<SuperInputPropsType> = ({ name, register, error, ...restProps }) => {
-  const finallyInputStyle = error ? `${s.input} ${s.error}` : s.input
+  const finallyInputStyle = error ? `${s.input} ${restProps.className} ${s.error}` : `${s.input} ${restProps.className}`
 
   return (
     <div className={s.wrapper}>

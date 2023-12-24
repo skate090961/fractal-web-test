@@ -4,7 +4,7 @@
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  width: 400px;
+  width: 300px;
   font-size: 14px;
   font-weight: 400;
   color: $black-alpha-48;
@@ -40,8 +40,8 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  transform: translateY(55%);
-  left: 370px;
+  top: 35px;
+  left: 270px;
   pointer-events: none;
 }
 

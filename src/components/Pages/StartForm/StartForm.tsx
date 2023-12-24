@@ -1,14 +1,14 @@
 import s from "./StartForm.module.scss"
-import { ProfileCard } from "../ProfileCard/ProfileCard.tsx"
-import { FormField } from "../FormField/FormField.tsx"
-import { SuperButton } from "../UI/SuperButton/SuperButton.tsx"
+import { ProfileCard } from "../../ProfileCard/ProfileCard.tsx"
+import { FormField } from "../../FormField/FormField.tsx"
+import { SuperButton } from "../../UI/SuperButton/SuperButton.tsx"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { selectMultiForm } from "../../store/multiForm/multi-form-selectors.ts"
+import { selectMultiForm } from "../../../store/multiForm/multi-form-selectors.ts"
 import * as yup from "yup"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { setEmail, setPhone } from "../../store/multiForm/multi-form-reducer.ts"
+import { setEmail, setPhone } from "../../../store/multiForm/multi-form-reducer.ts"
 
 export type FirstStepFormInput = {
   phone: string

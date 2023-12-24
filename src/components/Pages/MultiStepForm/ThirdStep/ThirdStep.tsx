@@ -1,16 +1,15 @@
 import s from "./ThirdStep.module.scss"
 import { ButtonsControls } from "../ButtonsControls/ButtonsControls.tsx"
 import React, { ChangeEvent, useState } from "react"
-import { Modal } from "../../Modal/Modal.tsx"
 import { useSelector } from "react-redux"
-import { selectMultiForm, selectRequestStatus } from "../../../store/multiForm/multi-form-selectors.ts"
 import * as yup from "yup"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { setAbout } from "../../../store/multiForm/multi-form-reducer.ts"
-import { postForm } from "../../../store/multiForm/multi-form-thunk.ts"
-import { useAppDispatch } from "../../../store/store.ts"
-
+import { selectMultiForm, selectRequestStatus } from "../../../../store/multiForm/multi-form-selectors.ts"
+import { useAppDispatch } from "../../../../store/store.ts"
+import { setAbout } from "../../../../store/multiForm/multi-form-reducer.ts"
+import { postForm } from "../../../../store/multiForm/multi-form-thunk.ts"
+import { Modal } from "../../../Modal/Modal.tsx"
 type ThirdStepPropsType = {
   changeActiveStep: (activeStep: number) => void
 }

@@ -19,11 +19,17 @@ export const FormField: React.FC<FormFieldPropsType> = ({ label, name, register,
   const finallyInputStyle = error ? `${s.input} ${s.error}` : s.input
   return (
     <div className={s.container}>
-      <label htmlFor="#">{label}</label>
+      <label htmlFor={`label-${label}`}>{label}</label>
       {isPhone ? (
-        <InputMask mask="+7 (999) 999-99-99" maskChar={null} className={finallyInputStyle} {...register(name)} />
+        <InputMask
+          mask="+7 (999) 999-99-99"
+          maskChar={null}
+          className={finallyInputStyle}
+          {...register(name)}
+          id={`label-${label}`}
+        />
       ) : (
-        <SuperInput {...restProps} register={register} name={name} error={error} />
+        <SuperInput {...restProps} register={register} name={name} error={error} id={`label-${label}`} />
       )}
     </div>
   )

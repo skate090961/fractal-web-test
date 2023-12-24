@@ -11,6 +11,7 @@ type SelectPropsType = DefaultSelectPropsType & {
   name: Path<any>
   register: UseFormRegister<any>
   error: any
+  title?: string
 }
 export const SuperSelect: React.FC<SelectPropsType> = ({
   options,
@@ -18,12 +19,13 @@ export const SuperSelect: React.FC<SelectPropsType> = ({
   name,
   register,
   error,
+  title,
   ...restProps
 }) => {
   const mappedOptions: any[] = options
     ? options.map((o) => (
-        <option className={s.option} key={o.id} value={o.test}>
-          {o.value}
+        <option className={s.option} key={o.value} value={o.value}>
+          {o.name}
         </option>
       ))
     : []
@@ -33,6 +35,7 @@ export const SuperSelect: React.FC<SelectPropsType> = ({
 
   return (
     <div className={s.wrapper}>
+      <div>{title}</div>
       <select {...restProps} className={s.select} {...register(name)} onChange={onChangeCallback}>
         {mappedOptions}
       </select>

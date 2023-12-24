@@ -3,7 +3,7 @@ import { FormDataType } from "../store/multiForm/multi-form-reducer.ts"
 const serverRequest = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (false) {
+      if (true) {
         resolve("response")
       } else {
         reject(new Error("Server Error"))

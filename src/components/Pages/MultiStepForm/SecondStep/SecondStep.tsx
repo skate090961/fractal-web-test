@@ -3,17 +3,17 @@ import { RadioCheckboxGroup } from "./RadioCheckboxGroup/RadioCheckboxGroup.tsx"
 import { ButtonsControls } from "../ButtonsControls/ButtonsControls.tsx"
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { selectMultiForm } from "../../../store/multiForm/multi-form-selectors.ts"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
-import { SuperButton } from "../../UI/SuperButton/SuperButton.tsx"
-import plusIcon from "../../../assets/icons/Plus.svg"
-import deleteIcon from "../../../assets/icons/Trash.svg"
-import { SuperInput } from "../../UI/SuperInput/SuperInput.tsx"
+import plusIcon from "../../../../assets/icons/Plus.svg"
+import deleteIcon from "../../../../assets/icons/Trash.svg"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { setAdvantages, setCheckbox, setRadio } from "../../../store/multiForm/multi-form-reducer.ts"
-import { convertStringsToNumbers } from "../../../helpers/convertStringsToNumbers.ts"
-import { convertNumbersToStrings } from "../../../helpers/convertNumbersToStrings.ts"
+import { selectMultiForm } from "../../../../store/multiForm/multi-form-selectors.ts"
+import { convertNumbersToStrings } from "../../../../helpers/convertNumbersToStrings.ts"
+import { convertStringsToNumbers } from "../../../../helpers/convertStringsToNumbers.ts"
+import { setAdvantages, setCheckbox, setRadio } from "../../../../store/multiForm/multi-form-reducer.ts"
+import { SuperInput } from "../../../UI/SuperInput/SuperInput.tsx"
+import { SuperButton } from "../../../UI/SuperButton/SuperButton.tsx"
 
 type SecondStepPropsType = {
   changeActiveStep: (activeStep: number) => void
@@ -81,6 +81,7 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
                   name={`advantages.${index}.name`}
                   register={register}
                   error={errors?.advantages?.[index]?.name || ""}
+                  style={{ width: "300px", backgroundColor: "white" }}
                 />
                 <div onClick={() => remove(index)} className={s.icon}>
                   <img src={deleteIcon} alt="trash" />

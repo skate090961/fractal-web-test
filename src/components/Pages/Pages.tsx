@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom"
-import { StartForm } from "../StartForm/StartForm.tsx"
-import { MultiStepForm } from "../MultiStepForm/MultiStepForm.tsx"
+import { StartForm } from "./StartForm/StartForm.tsx"
+import { MultiStepForm } from "./MultiStepForm/MultiStepForm.tsx"
 
 export const Pages = () => {
   return (
