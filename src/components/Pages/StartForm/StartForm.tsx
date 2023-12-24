@@ -47,7 +47,7 @@ export const StartForm = () => {
   }
 
   return (
-    <form className={s.container} onSubmit={handleSubmit(onSubmit)}>
+    <form className={s.container} onSubmit={handleSubmit(onSubmit as any)}>
       <div className={s.wrapper}>
         <div className={s.profileCard}>
           <ProfileCard />

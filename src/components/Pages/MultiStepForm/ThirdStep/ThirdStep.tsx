@@ -29,8 +29,6 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -39,7 +37,6 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
     mode: "all",
     resolver: yupResolver(schema),
   })
-  const text = watch("about", "")
 
   const [characterCount, setCharacterCount] = useState(0)
 
@@ -54,7 +51,7 @@ export const ThirdStep: React.FC<ThirdStepPropsType> = ({ changeActiveStep }) =>
     await dispatch(postForm(multiFormData))
   }
   return (
-    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit as any)}>
       <div className={s.fields}>
         <span>О себе</span>
         <textarea

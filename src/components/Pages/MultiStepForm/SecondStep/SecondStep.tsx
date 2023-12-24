@@ -37,6 +37,8 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
         name: yup.string().required("Поле обязательно для заполнения"),
       }),
     ),
+    checkbox: yup.array(),
+    radio: yup.string(),
   })
   const checkboxValue = multiFormData.checkbox ? convertNumbersToStrings(multiFormData.checkbox) : []
   const radioValue = multiFormData.radio ? String(multiFormData.radio) : "1"
@@ -70,7 +72,7 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
   }
   const handlePrevStep = () => changeActiveStep(1)
   return (
-    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit as any)}>
       <div className={s.fields}>
         <div className={s.block}>
           <div>Преимущества</div>

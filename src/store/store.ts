@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
 })
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AnyAction>
 export const useAppDispatch = () => useDispatch<AppDispatch>()
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+export const store = createStore(rootReducer, applyMiddleware(thunk) as any)
 
 //@ts-ignore
 window.store = store

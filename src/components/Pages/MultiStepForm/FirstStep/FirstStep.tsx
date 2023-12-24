@@ -70,7 +70,7 @@ export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) =>
     dispatch(setName(name))
     dispatch(setSername(sername))
     dispatch(setNickname(nickname))
-    dispatch(setSex(sex))
+    dispatch(setSex(sex as any))
     changeActiveStep(2)
   }
 
@@ -78,7 +78,7 @@ export const FirstStep: React.FC<FirstStepPropsType> = ({ changeActiveStep }) =>
     window.history.back()
   }
   return (
-    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit as any)}>
       <div className={s.fields}>
         <FormField
           name="nickname"
