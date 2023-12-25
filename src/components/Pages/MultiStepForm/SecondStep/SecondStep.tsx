@@ -21,7 +21,6 @@ type SecondStepPropsType = {
 export type SecondStepFormInput = {
   advantages: {
     name: string
-    value: string
   }[]
   checkbox: string[]
   radio: string
@@ -67,8 +66,13 @@ export const SecondStep: React.FC<SecondStepPropsType> = ({ changeActiveStep }) 
     const { advantages, checkbox, radio } = data
     const advantagesTotal = advantages.map((advantage) => advantage.name)
     dispatch(setAdvantageFields(advantages))
-    dispatch(updateFormData({ checkbox: convertStringsToNumbers(checkbox), radio: Number(radio) }))
-    dispatch(setAdvantages(advantagesTotal))
+    dispatch(
+      updateFormData({
+        checkbox: convertStringsToNumbers(checkbox),
+        radio: Number(radio),
+        advantages: advantagesTotal,
+      }),
+    )
     changeActiveStep(3)
   }
   const handlePrevStep = () => changeActiveStep(1)

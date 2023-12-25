@@ -1,9 +1,11 @@
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 export type AdvantageFieldsType = { name: string }
+
 export enum SexEnum {
   MAN = "man",
   WOMAN = "woman",
 }
+
 export type FormDataModelType = {
   nickname?: string
   name?: string
@@ -24,7 +26,6 @@ type MultiFormStateType = {
 }
 export type ActionsType =
   | ReturnType<typeof setActiveStep>
-  | ReturnType<typeof setAdvantages>
   | ReturnType<typeof setRequestStatus>
   | ReturnType<typeof clearForm>
   | ReturnType<typeof updateFormData>
@@ -41,11 +42,6 @@ export const multiFormReducer = (state: MultiFormStateType = initState, action: 
   switch (action.type) {
     case "MULTIFORM/SET-ACTIVE-STEP":
       return { ...state, activeStep: action.activeStep }
-    case "MULTIFORM/SET-ADVANTAGES":
-      return {
-        ...state,
-        formData: { ...state.formData, advantages: [...action.advantages] },
-      }
     case "MULTIFORM/SET-REQUEST-STATUS":
       return {
         ...state,
@@ -71,7 +67,6 @@ export const multiFormReducer = (state: MultiFormStateType = initState, action: 
   }
 }
 export const setActiveStep = (activeStep: number) => ({ type: "MULTIFORM/SET-ACTIVE-STEP", activeStep }) as const
-export const setAdvantages = (advantages: string[]) => ({ type: "MULTIFORM/SET-ADVANTAGES", advantages }) as const
 export const setRequestStatus = (status: RequestStatusType) =>
   ({ type: "MULTIFORM/SET-REQUEST-STATUS", status }) as const
 export const clearForm = () => ({ type: "MULTIFORM/CLEAR-FORM" }) as const
