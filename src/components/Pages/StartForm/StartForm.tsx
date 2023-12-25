@@ -5,7 +5,7 @@ import { SuperButton } from "../../UI/SuperButton/SuperButton.tsx"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { selectMultiForm } from "../../../store/multiForm/multi-form-selectors.ts"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { updateFormData } from "../../../store/multiForm/multi-form-reducer.ts"
 import { startFormSchema } from "./StartFormSchema.ts"
@@ -23,10 +23,10 @@ export const StartForm = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      phone: multiFormData.phone,
       email: multiFormData.email,
     },
     mode: "onBlur",
@@ -45,13 +45,22 @@ export const StartForm = () => {
         <div className={s.profileCard}>
           <ProfileCard />
         </div>
-        <FormField
+        <Controller
           name="phone"
-          register={register}
-          error={errors.phone}
-          label="Номер телефона"
-          placeholder="+7 (999) 999-99-99"
-          isPhone={true}
+          control={control}
+          defaultValue={multiFormData.phone || ""}
+          render={({ field: { onChange, value } }) => (
+            <FormField
+              name="phone"
+              register={register}
+              error={errors.phone}
+              label="Номер телефона"
+              placeholder="+7 (999) 999-99-99"
+              onChange={onChange}
+              value={value}
+              isPhone={true}
+            />
+          )}
         />
         <FormField
           name="email"

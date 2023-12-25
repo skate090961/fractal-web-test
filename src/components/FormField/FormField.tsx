@@ -13,9 +13,20 @@ type FormFieldPropsType = DefaultInputPropsType & {
   register: UseFormRegister<any>
   error: any
   isPhone?: boolean
+  onChange?: any
+  value?: any
 }
 
-export const FormField: React.FC<FormFieldPropsType> = ({ label, name, register, error, isPhone, ...restProps }) => {
+export const FormField: React.FC<FormFieldPropsType> = ({
+  label,
+  name,
+  register,
+  error,
+  isPhone,
+  onChange,
+  value,
+  ...restProps
+}) => {
   const finallyInputStyle = error ? `${s.input} ${s.error}` : s.input
   return (
     <div className={s.container}>
@@ -26,6 +37,8 @@ export const FormField: React.FC<FormFieldPropsType> = ({ label, name, register,
           maskChar={null}
           className={finallyInputStyle}
           {...register(name)}
+          onChange={onChange}
+          value={value}
           id={`label-${label}`}
         />
       ) : (
